@@ -10,6 +10,7 @@ const envSchema = z.object({
     .default('development'),
   PORT: z.coerce.number().default(HTTP_PORT),
   DATABASE_URL: z.string(),
+  JWT_SECRET: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env); // Validação do parse

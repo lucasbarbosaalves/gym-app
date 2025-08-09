@@ -2,11 +2,16 @@ import fastify from 'fastify';
 import { ZodError } from 'zod';
 import { env } from './env';
 import { appRoutes } from './http/routes';
+import fastifyJwt from '@fastify/jwt';
 
 export const app = fastify();
 
 const BAD_REQUEST_STATUS_CODE = 400;
 const INTERNAL_SERVER_ERROR_CODE = 500;
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+});
 
 app.register(appRoutes);
 
