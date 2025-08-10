@@ -21,14 +21,21 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   try {
     const useCase = createGymUseCase();
 
-    await useCase.execute({
+    const { gym } = await useCase.execute({
       title,
       description,
       phone,
       latitude,
       longitude,
     });
-    return reply.status(201).send({ message: 'Gym created successfully' });
+    return reply.status(201).send({
+      id: gym.id,
+      title: gym.title,
+      description: gym.description,
+      phone: gym.phone,
+      latitude: gym.latitude,
+      longitude: gym.longitude,
+    });
   } catch (error) {
     return reply.status(500).send({
       message: 'An error occurred while creating the gym',

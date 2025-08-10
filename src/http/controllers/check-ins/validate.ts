@@ -4,15 +4,15 @@ import z from 'zod';
 
 export async function validate(request: FastifyRequest, reply: FastifyReply) {
   const validateCheckInParamsSchema = z.object({
-    checkId: z.uuid(),
+    checkInId: z.string().uuid(),
   });
 
-  const { checkId } = validateCheckInParamsSchema.parse(request.params);
+  const { checkInId } = validateCheckInParamsSchema.parse(request.params);
 
-  const useCase = makeValidateCheckInUseCase();
+  const validateCheckInUseCase = makeValidateCheckInUseCase();
 
-  await useCase.execute({
-    checkinId: checkId,
+  await validateCheckInUseCase.execute({
+    checkinId: checkInId,
   });
 
   return reply.status(204).send();
