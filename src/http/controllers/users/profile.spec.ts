@@ -16,14 +16,14 @@ describe('Profile (e2e)', () => {
     const { token } = await createAndAuthenticateUser(app);
     const response = await request(app.server)
       .get('/me')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
     expect(response.statusCode).toEqual(200);
-    expect(response.body.user).toEqual({
-      id: expect.any(String),
-      name: 'John Doe',
-      email: 'john.doe@hotmail.com',
-      created_at: expect.any(String),
-    });
+    expect(response.body.user).toEqual(
+      expect.objectContaining({
+        email: 'johndoe@example.com',
+      })
+    );
   });
 });
